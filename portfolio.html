@@ -1,0 +1,1340 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Portfolio
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+  body {
+    font-family: "Inter", sans-serif;
+    scroll-behavior: smooth;
+    background: radial-gradient(ellipse at center, #050005 0%, #0a0a0a 100%);
+    color: white;
+  }
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #111;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border-radius: 10px;
+  }
+  /* Animated underline for nav links */
+  nav ul li a {
+    position: relative;
+    overflow: hidden;
+  }
+  nav ul li a::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #7c3aed;
+    bottom: 0;
+    left: -100%;
+    transition: left 0.3s ease;
+  }
+  nav ul li a:hover::after,
+  nav ul li a.active::after {
+    left: 0;
+  }
+  /* Section fade-in animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Card hover effect */
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.8);
+    z-index: 10;
+  }
+  /* Typed text cursor blink */
+  #typed-text {
+    border-right: 2px solid white;
+    padding-right: 4px;
+    animation: blink 0.8s infinite;
+    display: inline-block;
+    min-height: 1.2em;
+    white-space: pre-line;
+  }
+  @keyframes blink {
+    0%, 100% { border-color: white; }
+    50% { border-color: transparent; }
+  }
+  /* Smooth scroll offset fix for fixed nav */
+  section {
+    scroll-margin-top: 80px;
+  }
+  /* Responsive nav toggle */
+  #nav-toggle:checked + ul {
+    max-height: 500px;
+  }
+  ul {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+  @media (min-width: 768px) {
+    ul {
+      max-height: none !important;
+      overflow: visible !important;
+    }
+  }
+  /* Nav toggle button style */
+  #nav-toggle {
+    display: none;
+  }
+  #nav-toggle-label {
+    display: block;
+    cursor: pointer;
+    width: 28px;
+    height: 22px;
+    position: relative;
+  }
+  #nav-toggle-label span,
+  #nav-toggle-label span::before,
+  #nav-toggle-label span::after {
+    display: block;
+    background: white;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  #nav-toggle-label span {
+    top: 50%;
+    margin-top: -1.5px;
+  }
+  #nav-toggle-label span::before {
+    content: "";
+    top: -8px;
+  }
+  #nav-toggle-label span::after {
+    content: "";
+    top: 8px;
+  }
+  #nav-toggle:checked + ul + #nav-toggle-label span {
+    background: transparent;
+  }
+  #nav-toggle:checked + ul + #nav-toggle-label span::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  #nav-toggle:checked + ul + #nav-toggle-label span::after {
+    transform: rotate(-45deg);
+    top: 0;
+  }
+  /* Section heading underline */
+  h2 {
+    position: relative;
+  }
+  h2::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background: #7c3aed;
+    bottom: -8px;
+    left: 0;
+    border-radius: 2px;
+  }
+  /* Link underline on hover */
+  a:hover {
+    text-decoration: underline;
+  }
+  /* Responsive adjustments */
+  @media (max-width: 767px) {
+    nav ul {
+      background: #111;
+      border-radius: 8px;
+      padding: 10px 0;
+      width: 100%;
+    }
+    nav ul li {
+      margin: 0.5rem 0;
+      text-align: center;
+    }
+  }
+  /* Section container */
+  .section-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  /* Gradient text for heading */
+  .gradient-text {
+    background: linear-gradient(90deg, #7c3aed, #ff007f, #ff69b4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+  /* Float animation for image */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+      /* filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.7)); */
+    }
+    50% {
+      transform: translateY(-20px);
+      /* filter: drop-shadow(0 0 12px rgba(255, 105, 180, 0.9)); */
+    }
+  }
+  .float-animation {
+    animation: float 4s ease-in-out infinite;
+  }
+  /* Vertically center home section content */
+  #home {
+    min-height: calc(100vh - 96px);
+    display: flex;
+    align-items: center;
+  }
+  /* Remove icons and button from header */
+  header div.hidden.md\\:flex {
+    display: none !important;
+  }
+  /* Adjust home image position */
+  #home .float-animation {
+    margin-left: 5vw;
+  }
+
+  .button-custom {
+  background: linear-gradient(45deg, purple, rgb(255, 16, 195));
+  border-radius: 100px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms ease-in-out;
+  /* border: 2px solid white; */
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-custom:hover {
+  transform: scale(1.15) rotate(-2deg);
+  box-shadow: 0px 6px 8px rgba(255, 20, 147, 0.4), 0px 8px 16px rgba(138, 43, 226, 0.4);
+}
+
+  /* Enhanced card backgrounds for skills */
+  .bg-skill-1 {
+    background: linear-gradient(135deg, #4c1d95, #a21caf);
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.7);
+  }
+  .bg-skill-2 {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
+  }
+  .bg-skill-3 {
+    background: linear-gradient(135deg, #b91c1c, #ef4444);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.7);
+  }
+  .bg-skill-4 {
+    background: linear-gradient(135deg, #065f46, #10b981);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.7);
+  }
+  .bg-skill-5 {
+    background: linear-gradient(135deg, #e21a4c, #e910a8);
+    box-shadow: 0 4px 15px rgba(255, 26, 167, 0.7);
+  }
+  .bg-skill-6 {
+    background: linear-gradient(135deg, #f5690b, #ff9955);
+    box-shadow: 0 4px 15px rgba(251, 140, 36, 0.7);
+  }
+  .bg-skill-7 {
+    background: linear-gradient(135deg, #047857, #10b981);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.7);
+  }
+  .bg-skill-8 {
+    background: linear-gradient(135deg, #db2777, #ec4899);
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.7);
+  }
+  .bg-skill-9 {
+    background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
+  }
+  .bg-skill-10 {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    box-shadow: 0 4px 15px rgba(251, 146, 60, 0.7);
+  }
+  .bg-skill-11 {
+    background: linear-gradient(135deg, #9333ea, #a855f7);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.7);
+  }
+  .bg-skill-12 {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
+  }
+  /* Experience, project, certification backgrounds */
+  .bg-experience {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.7);
+  }
+  .bg-project {
+    background: linear-gradient(135deg, #b91c1c, #ef4444);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.7);
+  }
+  .bg-certification {
+    background: linear-gradient(135deg, #065f46, #10b981);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.7);
+  }
+  /* Professional/social links backgrounds with icon color gradients */
+  .bg-htb {
+    background: linear-gradient(135deg, #00b140, #00ff6a);
+    box-shadow: 0 4px 15px rgba(0, 255, 106, 0.7);
+  }
+  .bg-thm {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
+  }
+  .bg-ctf {
+    background: linear-gradient(135deg, #db2777, #ec4899);
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.7);
+  }
+  .bg-cybrary {
+    background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
+  }
+  .bg-offsec {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    box-shadow: 0 4px 15px rgba(251, 146, 60, 0.7);
+  }
+  .bg-sans {
+    background: linear-gradient(135deg, #ef4444, #f87171);
+    box-shadow: 0 4px 15px rgba(248, 113, 113, 0.7);
+  }
+  .bg-exploitdb {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
+  }
+  .bg-metasploit {
+    background: linear-gradient(135deg, #9333ea, #a855f7);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.7);
+  }
+  .bg-cis {
+    background: linear-gradient(135deg, #059669, #10b981);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.7);
+  }
+  .bg-nist {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
+  }
+  .bg-kali {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    box-shadow: 0 4px 15px rgba(30, 41, 59, 0.7);
+  }
+  .bg-blackhat {
+    background: linear-gradient(135deg, #000000, #434343);
+    box-shadow: 0 4px 15px rgba(67, 67, 67, 0.7);
+  }
+  .bg-defcon {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.7);
+  }
+  .bg-cyberventures {
+    background: linear-gradient(135deg, #db2777, #ec4899);
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.7);
+  }
+  .bg-securityweekly {
+    background: linear-gradient(135deg, #7c3aed, #d946ef);
+    box-shadow: 0 4px 15px rgba(217, 70, 239, 0.7);
+  }
+  .bg-infosec {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
+  }
+  .bg-darkreading {
+    background: linear-gradient(135deg, #ff3535, #d65c5c);
+    box-shadow: 0 4px 15px rgba(248, 113, 113, 0.7);
+  }
+  .bg-securitymagazine {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    box-shadow: 0 4px 15px rgba(52, 211, 153, 0.7);
+  }
+  /* Project marquee container */
+  .marquee-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 400px;
+  }
+  /* Marquee animation */
+  .marquee {
+    display: flex;
+    gap: 2rem;
+    animation: marqueeAnim 30s linear infinite;
+  }
+  .marquee:hover {
+    animation-play-state: paused;
+  }
+  @keyframes marqueeAnim {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  /* Project card for marquee */
+  .marquee .project-card {
+    min-width: 320px;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(133, 67, 248, 0.473);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: linear-gradient(45deg, rgb(116, 3, 168), rgb(249, 71, 255));
+;
+  }
+  .marquee .project-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(54, 255, 178, 0.9);
+    z-index: 20;
+  }
+  .marquee .project-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+  .marquee .project-card .content {
+    padding: 1rem;
+    color: white;
+  }
+  /* Modal styles */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: #111;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 30px #7c3aed;
+    overflow: hidden;
+  }
+  .modal-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    display: block;
+  }
+  .modal-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.3s ease;
+  }
+  .modal-close:hover {
+    color: #ff69b4;
+  }
+  /* Social links container scroll */
+  .social-links-container {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+  .social-link {
+    transition: all 0.3s ease;
+  }
+  .social-link:hover {
+    box-shadow: 0 0 15px 3px rgba(255, 105, 180, 0.6);
+    transform: scale(1.05);
+  }
+  /* Social cards bigger */
+  .social-link {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  /* Skills text white */
+  .bg-skill-1 p,
+  .bg-skill-2 p,
+  .bg-skill-3 p,
+  .bg-skill-4 p,
+  .bg-skill-5 p,
+  .bg-skill-6 p,
+  .bg-skill-7 p,
+  .bg-skill-8 p,
+  .bg-skill-9 p,
+  .bg-skill-10 p,
+  .bg-skill-11 p,
+  .bg-skill-12 p {
+    color: #e0e0e0 !important;
+  }
+  </style>
+ </head>
+ <body>
+  <header class="fixed top-0 left-0 right-0 bg-gradient-to-b from-black/90 to-black/50 backdrop-blur-md z-50 shadow-lg">
+   <div class="section-container flex items-center justify-center py-4">
+    <input id="nav-toggle" type="checkbox"/>
+    <ul class="flex flex-col md:flex-row md:items-center md:space-x-8 text-gray-400 text-xl transition-all duration-500 ease-in-out">
+     <li>
+      <a class="nav-link text-white" href="#home">
+       Home
+      </a>
+     </li>
+     <li>
+      <a class="nav-link" href="#skills">
+       Skills
+      </a>
+     </li>
+     <li>
+      <a class="nav-link" href="#experience">
+       Experience
+      </a>
+     </li>
+     <li>
+      <a class="nav-link" href="#projects">
+       Projects
+      </a>
+     </li>
+     <li>
+      <a class="nav-link" href="#certifications">
+       Certifications
+      </a>
+     </li>
+     <li>
+      <a class="nav-link" href="#professional-links">
+       Professional Links
+      </a>
+     </li>
+     <li>
+      <a class="nav-link" href="#social-links">
+       Social Links
+      </a>
+     </li>
+    </ul>
+   </div>
+  </header>
+  <main class="pt-24">
+   <section aria-label="Home section" class="section-container fade-in opacity-0 translate-y-8" data-animate="" id="home">
+    <div class="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-0 relative z-10">
+     <div class="flex-2 max-w-2xl">
+      <div class="inline-block px-4 py-1 pl-0 rounded text-white font-semibold text-5xl ml-0 mb-0 select-none shadow-lg">
+       Welcome to my Portfolio
+      </div>
+      <h1 class="font-bold text-5xl md:text-5xl leading-tight mb-6 select-none gradient-text" style="white-space: pre-line;">
+       Hi! I'm Alok Kumar Singh,
+       <span aria-atomic="true" aria-live="polite" class="inline-block mt-4 min-h-[3em] select-none" id="typed-text">
+       </span>
+      </h1>
+      <p class="text-white text-base md:text-lg mb-8 leading-relaxed select-none drop-shadow-md">
+        I'm a passionate cybersecurity student focused on protecting digital systems and data. I enjoy exploring ethical hacking, network security, threat analysis, and more.
+      </p>
+      <a class="inline-flex items-center text-white font-semibold text-base select-none focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:ring-offset-2" href="/contact.html">
+        <button class="button-custom px-5 py-3 font-semibold transition">
+          Let's Connect ->
+        </button>
+      </a>
+
+
+     </div>
+     <div class="flex-1 relative flex justify-center md:justify-start float-animation" style="margin-left: 12vw;">
+      <img alt="Illustration of an astronaut floating in space in front of a purple planet with a small rocket flying nearby" class="max-w-full h-auto rounded-lg shadow-2xl" draggable="false" height="400" src="/assets/bg-removed-ChatGPT_Image_May_14__2025__06_13_31_PM-removebg-preview.png" width="400"/>
+     </div>
+    </div>
+   </section>
+   <!-- Blue glowing orb and small star elements -->
+   <img alt="Blue glowing orb" class="absolute top-[15%] left-[40%] w-15 h-15 rounded-full blur-[8px] pointer-events-none select-none" height="55" src="https://storage.googleapis.com/a1aa/image/b42297f4-c378-45d7-f745-b3c2a8b2c952.jpg" width="55"/>
+   <img alt="Blue glowing orb" class="absolute top-[87%] left-[80%] w-10 h-10 rounded-full blur-[8px] pointer-events-none select-none" height="40" src="https://storage.googleapis.com/a1aa/image/b42297f4-c378-45d7-f745-b3c2a8b2c952.jpg" width="40"/>
+   <img alt="Small blue star" class="absolute top-[10%] left-[10%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <img alt="Small blue star" class="absolute top-[29.7%] left-[50.5%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <img alt="Small blue star" class="absolute top-[55%] left-[20%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <img alt="Small blue star" class="absolute top-[81%] left-[87%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <img alt="Small blue star" class="absolute top-[36%] left-[70%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <img alt="Small blue star" class="absolute top-[76%] left-[30%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <img alt="Small blue star" class="absolute top-[35%] left-[25%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <img alt="Small blue star" class="absolute top-[85%] left-[65%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <img alt="Small blue star" class="absolute top-[17%] left-[82%] w-1.5 h-1.5 rounded-full pointer-events-none select-none" height="6" src="https://storage.googleapis.com/a1aa/image/ed69b339-371b-4f31-2b95-11de44048842.jpg" width="6"/>
+   <div class="absolute w-[150px] h-[2px] bg-gradient-to-r from-[#3b82f6] to-transparent rounded-full rotate-[30deg] top-[15%] left-[9%] blur-sm pointer-events-none select-none">
+   </div>
+   <div class="absolute w-[80px] h-[2px] bg-gradient-to-r from-[#3b82f6] to-transparent rounded-full rotate-[35deg] top-[33%] left-[50%] blur-sm pointer-events-none select-none">
+   </div>
+   <div class="absolute w-[120px] h-[2px] bg-gradient-to-r from-[#3b82f6] to-transparent rounded-full rotate-[30deg] top-[60%] left-[20%] blur-sm pointer-events-none select-none">
+   </div>
+   <div class="absolute w-[90px] h-[2px] bg-gradient-to-r from-[#3b82f6] to-transparent rounded-full rotate-[30deg] top-[80%] left-[30%] blur-sm pointer-events-none select-none">
+   </div>
+   </div>
+   <div class="absolute w-[90px] h-[2px] bg-gradient-to-r from-[#3b82f6] to-transparent rounded-full rotate-[30deg] top-[40%] left-[70%] blur-sm pointer-events-none select-none">
+   </div>
+   </div>
+   <div class="absolute w-[90px] h-[2px] bg-gradient-to-r from-[#3b82f6] to-transparent rounded-full rotate-[30deg] top-[85%] left-[87%] blur-sm pointer-events-none select-none">
+   </div>
+   <!-- Skills Section -->
+   <section aria-label="Skills section" class="section-container mb-32 mt-10 fade-in opacity-0 translate-y-8" data-animate="" id="skills">
+    <h2 class="text-3xl font-extrabold mb-12 select-text">
+     Skills
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+     <div class="card bg-skill-1 rounded-md p-6 text-center cursor-default text-white">
+      <i class="fas fa-pencil-ruler text-5xl mb-5 drop-shadow-lg">
+      </i>
+      <h3 class="font-semibold text-xl mb-2">
+       UI/UX Design
+      </h3>
+      <p class="text-white text-sm leading-relaxed">
+       Figma, User Research
+      </p>
+     </div>
+     <div class="card bg-skill-2 rounded-md p-6 text-center cursor-default text-white">
+      <i class="fas fa-code text-5xl mb-5 drop-shadow-lg">
+      </i>
+      <h3 class="font-semibold text-xl mb-2">
+       Frontend Development
+      </h3>
+      <p class="text-white text-sm leading-relaxed">
+       React, Tailwind CSS
+      </p>
+     </div>
+     <div class="card bg-skill-3 rounded-md p-6 text-center cursor-default text-white">
+      <i class="fas fa-shield-alt text-5xl mb-5 drop-shadow-lg">
+      </i>
+      <h3 class="font-semibold text-xl mb-2">
+       Cyber Security
+      </h3>
+      <p class="text-white text-sm leading-relaxed">
+       Penetration Testing, Network Security
+      </p>
+     </div>
+     <div class="card bg-skill-4 rounded-md p-6 text-center cursor-default text-white">
+      <i class="fas fa-database text-5xl mb-5 drop-shadow-lg">
+      </i>
+      <h3 class="font-semibold text-xl mb-2">
+       Database Management
+      </h3>
+      <p class="text-white text-sm leading-relaxed">
+       MySQL, MongoDB
+      </p>
+     </div>
+     <div class="card bg-skill-10 rounded-md p-6 text-center cursor-default text-white">
+      <i class="fas fa-terminal text-5xl mb-5 drop-shadow-lg">
+      </i>
+      <h3 class="font-semibold text-xl mb-2">
+       Scripting & Automation
+      </h3>
+      <p class="text-white text-sm leading-relaxed">
+       Python, Bash, PowerShell
+      </p>
+     </div>
+    </div>
+   </section>
+   <!-- Experience Section -->
+   <section aria-label="Experience section" class="section-container mb-32 fade-in opacity-0 translate-y-8" data-animate="" id="experience">
+    <h2 class="text-3xl font-extrabold mb-12 select-text">
+     Experience
+    </h2>
+    <div class="space-y-12">
+     <article class="bg-experience rounded-md p-8 shadow-lg card text-white">
+      <h3 class="text-2xl font-semibold mb-2">
+       Cyber Security Intern - Cyber Secured India
+      </h3>
+      <p class="text-gray-300 text-sm mb-4 italic">
+       Sept 2024 - Nov 2024
+      </p>
+      <ul class="list-disc list-inside text-gray-300 text-base space-y-2 leading-relaxed">
+       <li>
+        • Performed hands-on cybersecurity labs using TryHackMe and HackTheBox.       
+      </li>
+       <li>
+        • Completed OPSWAT cybersecurity certifications.
+       </li>
+       <li>
+        • Documented and submitted detailed lab reports at key checkpoints.
+       </li>
+      </ul>
+     </article>
+     <article class="bg-experience rounded-md p-8 shadow-lg card text-white">
+      <h3 class="text-2xl font-semibold mb-2">
+       Cyber Security Intern - Coincent.ai
+      </h3>
+      <p class="text-gray-300 text-sm mb-4 italic">
+       Aug 2024 - Sept 2024
+      </p>
+      <ul class="list-disc list-inside text-gray-300 text-base space-y-2 leading-relaxed">
+       <li>
+        • Conducted penetration testing using Linux-based tools in virtual machines.
+       </li>
+       <li>
+        • Simulated real-world cyberattacks by exploiting system vulnerabilities.
+       </li>
+      </ul>
+     </article>
+     <article class="bg-experience rounded-md p-8 shadow-lg card text-white">
+      <h3 class="text-2xl font-semibold mb-2">
+       Blockpreneur - Software Technology Parks of India (STPI)
+      </h3>
+      <p class="text-gray-300 text-sm mb-4 italic">
+       June 2024 - Aug 2024
+      </p>
+      <ul class="list-disc list-inside text-gray-300 text-base space-y-2 leading-relaxed">
+       <li>
+        • Completed Blockchain Bootcamp by IDS and earned Hedera Developer Certification.
+       </li>
+       <li>
+        • Gained exposure to startup operations, legal frameworks, funding models, and fintech.
+       </li>
+      </ul>
+     </article>
+     <article class="bg-experience rounded-md p-8 shadow-lg card text-white">
+      <h3 class="text-2xl font-semibold mb-2">
+       Trainee & Intern - CDAC, Noida
+      </h3>
+      <p class="text-gray-300 text-sm mb-4 italic">
+       June 2024 - Aug 2024
+      </p>
+      <ul class="list-disc list-inside text-gray-300 text-base space-y-2 leading-relaxed">
+       <li>
+        • Trained in Ethical Hacking & Penetration Testing with Linux tools.
+       </li>
+       <li>
+        • Final project: Developed Intrusion Detection System using Snort on Windows.
+       </li>
+      </ul>
+     </article>
+    </div>
+   </section>
+   <!-- Projects Section -->
+   <section aria-label="Projects section" class="section-container mb-32 mt-10 fade-in opacity-0 translate-y-8" data-animate="" id="projects">
+    <h2 class="text-3xl font-extrabold mb-12 select-text">
+     Projects
+    </h2>
+    <div aria-label="Scrolling projects carousel" class="marquee-container pt-9">
+     <div aria-atomic="true" aria-live="polite" class="marquee" role="list">
+      <!-- Repeat projects twice for seamless marquee -->
+      <div class="project-card card" data-url="https://example.com/project1" role="listitem" tabindex="0">
+       <img alt="Project 1 screenshot showing a modern UI dashboard" loading="lazy" src="https://storage.googleapis.com/a1aa/image/18f10ab3-51da-4604-03c8-4a0fae499667.jpg"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Modern UI Dashboard
+        </h3>
+        <p>
+         A sleek dashboard design for analytics and reporting.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project2" role="listitem" tabindex="0">
+       <img alt="Project 2 screenshot showing an e-commerce website homepage" loading="lazy" src="https://storage.googleapis.com/a1aa/image/05f160bd-16e3-43ed-a44a-e758cb389197.jpg"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         E-commerce Website
+        </h3>
+        <p>
+         Full stack e-commerce platform with payment integration.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project3" role="listitem" tabindex="0">
+       <img alt="Project 3 screenshot showing a mobile app interface" loading="lazy" src="https://storage.googleapis.com/a1aa/image/bf931c4a-859e-417c-0aec-b8dc5912efc5.jpg"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Mobile App Interface
+        </h3>
+        <p>
+         User-friendly mobile app UI for task management.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project4" role="listitem" tabindex="0">
+       <img alt="Project 4 screenshot showing a cyber security dashboard" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/7c678c75-1042-48a9-34b2-9540bbfe08cb.jpg" width="600"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Cyber Security Dashboard
+        </h3>
+        <p>
+         Real-time threat monitoring and alert system.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project5" role="listitem" tabindex="0">
+       <img alt="Project 5 screenshot showing a portfolio website" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3f745a5f-18d9-458f-bda0-b977b6bdcad6.jpg" width="600"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Portfolio Website
+        </h3>
+        <p>
+         Personal portfolio with interactive animations.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project6" role="listitem" tabindex="0">
+       <img alt="Project 6 screenshot showing a network security tool" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/01a3d7ab-bd67-4f52-1ec0-4106384f8c8a.jpg" width="600"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Network Security Tool
+        </h3>
+        <p>
+         Tool for scanning and securing networks.
+        </p>
+       </div>
+      </div>
+      <!-- Repeat again for seamless scroll -->
+      <div class="project-card card" data-url="https://example.com/project1" role="listitem" tabindex="0">
+       <img alt="Project 1 screenshot showing a modern UI dashboard" loading="lazy" src="https://storage.googleapis.com/a1aa/image/18f10ab3-51da-4604-03c8-4a0fae499667.jpg"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Modern UI Dashboard
+        </h3>
+        <p>
+         A sleek dashboard design for analytics and reporting.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project2" role="listitem" tabindex="0">
+       <img alt="Project 2 screenshot showing an e-commerce website homepage" loading="lazy" src="https://storage.googleapis.com/a1aa/image/05f160bd-16e3-43ed-a44a-e758cb389197.jpg"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         E-commerce Website
+        </h3>
+        <p>
+         Full stack e-commerce platform with payment integration.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project3" role="listitem" tabindex="0">
+       <img alt="Project 3 screenshot showing a mobile app interface" loading="lazy" src="https://storage.googleapis.com/a1aa/image/bf931c4a-859e-417c-0aec-b8dc5912efc5.jpg"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Mobile App Interface
+        </h3>
+        <p>
+         User-friendly mobile app UI for task management.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project4" role="listitem" tabindex="0">
+       <img alt="Project 4 screenshot showing a cyber security dashboard" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/7c678c75-1042-48a9-34b2-9540bbfe08cb.jpg" width="600"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Cyber Security Dashboard
+        </h3>
+        <p>
+         Real-time threat monitoring and alert system.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project5" role="listitem" tabindex="0">
+       <img alt="Project 5 screenshot showing a portfolio website" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3f745a5f-18d9-458f-bda0-b977b6bdcad6.jpg" width="600"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Portfolio Website
+        </h3>
+        <p>
+         Personal portfolio with interactive animations.
+        </p>
+       </div>
+      </div>
+      <div class="project-card card" data-url="https://example.com/project6" role="listitem" tabindex="0">
+       <img alt="Project 6 screenshot showing a network security tool" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/01a3d7ab-bd67-4f52-1ec0-4106384f8c8a.jpg" width="600"/>
+       <div class="content">
+        <h3 class="font-semibold text-xl mb-1">
+         Network Security Tool
+        </h3>
+        <p>
+         Tool for scanning and securing networks.
+        </p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- Certifications Section -->
+   <section aria-label="Certifications section" class="section-container mb-32 fade-in opacity-0 translate-y-8" data-animate="" id="certifications">
+    <h2 class="text-3xl font-extrabold mb-12 select-text">
+     Certifications
+    </h2>
+    <ul class="space-y-8">
+      <li class="bg-certification rounded-md p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow-lg card text-white">
+      <div>
+       <h3 class="font-semibold text-xl">
+        <a href="https://www.cloudskillsboost.google/public_profiles/8a5268af-a12c-4ec1-a034-bd8a8e86e862">
+            Google Cloud Arcade Games
+        </a>
+       </h3>
+       <p class="text-gray-200 text-sm italic">
+        Google (Apr, 2025 - Current)
+       </p>
+      </div>
+      <button aria-label="View Certified UX Designer Certificate" class="mt-4 sm:mt-0 inline-block text-white font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 open-cert" data-img="https://www.cloudskillsboost.google/public_profiles/8a5268af-a12c-4ec1-a034-bd8a8e86e862">
+       View Certificate
+      </button>
+     </li>
+     <li class="bg-certification rounded-md p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow-lg card text-white">
+      <div>
+       <h3 class="font-semibold text-xl">
+        Technical, and Soft Skills Training 
+       </h3>
+       <p class="text-gray-200 text-sm italic">
+        Infosys, Aspire for Her (Mar, 2025)
+       </p>
+      </div>
+      <button aria-label="View Certified UX Designer Certificate" class="mt-4 sm:mt-0 inline-block text-white font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 open-cert" data-img="https://placehold.co/800x600/png?text=Certified+UX+Designer+Certificate">
+       View Certificate
+      </button>
+     </li>
+     <li class="bg-certification rounded-md p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow-lg card text-white">
+      <div>
+       <h3 class="font-semibold text-xl">
+        Geo-data sharing and Cyber Security 
+       </h3>
+       <p class="text-gray-200 text-sm italic">
+        ISRO (Jan, 2025)
+       </p>
+      </div>
+      <button aria-label="View Full Stack Web Developer Certificate" class="mt-4 sm:mt-0 inline-block text-white font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 open-cert" data-img="https://drive.google.com/file/d/1FfRthwSYf3EzoMyCGBKQHIv-va8r0_9R">
+       View Certificate
+      </button>
+     </li>
+     <li class="bg-certification rounded-md p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow-lg card text-white">
+      <div>
+       <h3 class="font-semibold text-xl">
+        Blockchain Bootcamp 
+       </h3>
+       <p class="text-gray-200 text-sm italic">
+        IDS Inc (Aug, 2024)
+       </p>
+      </div>
+      <button aria-label="View Cyber Security Specialist Certificate" class="mt-4 sm:mt-0 inline-block text-white font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 open-cert" data-img="https://placehold.co/800x600/png?text=Cyber+Security+Specialist+Certificate">
+       View Certificate
+      </button>
+     </li>
+     <li class="bg-certification rounded-md p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow-lg card text-white">
+      <div>
+       <h3 class="font-semibold text-xl">
+        Introduction to Cyber Security 
+       </h3>
+       <p class="text-gray-200 text-sm italic">
+        CISCO Networking Academy (May, 2024)
+       </p>
+      </div>
+      <button aria-label="View Cyber Security Specialist Certificate" class="mt-4 sm:mt-0 inline-block text-white font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 open-cert" data-img="https://placehold.co/800x600/png?text=Cyber+Security+Specialist+Certificate">
+       View Certificate
+      </button>
+     </li>
+     <li class="bg-certification rounded-md p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow-lg card text-white">
+      <div>
+       <h3 class="font-semibold text-xl">
+        Python Programming 
+       </h3>
+       <p class="text-gray-200 text-sm italic">
+        GUVI, Google for Education Partner  (Aug, 2023)
+       </p>
+      </div>
+      <button aria-label="View Cyber Security Specialist Certificate" class="mt-4 sm:mt-0 inline-block text-white font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 open-cert" data-img="https://placehold.co/800x600/png?text=Cyber+Security+Specialist+Certificate">
+       View Certificate
+      </button>
+     </li>
+     <li class="bg-certification rounded-md p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow-lg card text-white">
+      <div>
+       <h3 class="font-semibold text-xl">
+        National Students Paryavaran Competition - 4rth Position 
+       </h3>
+       <p class="text-gray-200 text-sm italic">
+        Ministry of Education, Government of India | Gurugram University (June, 2023)
+       </p>
+      </div>
+      <button aria-label="View Cyber Security Specialist Certificate" class="mt-4 sm:mt-0 inline-block text-white font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 open-cert" data-img="https://placehold.co/800x600/png?text=Cyber+Security+Specialist+Certificate">
+       View Certificate
+      </button>
+     </li>
+     <li class="bg-certification rounded-md p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow-lg card text-white">
+      <div>
+       <h3 class="font-semibold text-xl">
+        Cyber Security and Ethical Hacking   
+       </h3>
+       <p class="text-gray-200 text-sm italic">
+        Aries IIT in collaboration with Coincent (DEC, 2022 - FEB, 2023)
+       </p>
+      </div>
+      <button aria-label="View Cyber Security Specialist Certificate" class="mt-4 sm:mt-0 inline-block text-white font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 open-cert" data-img="https://placehold.co/800x600/png?text=Cyber+Security+Specialist+Certificate">
+       View Certificate
+      </button>
+     </li>
+    </ul>
+   </section>
+   <!-- Professional Links Section -->
+   <section aria-label="Professional links section" class="section-container mb-32 fade-in opacity-0 translate-y-8" data-animate="" id="professional-links">
+    <h2 class="text-3xl font-extrabold mb-12 select-text">
+     Professional Links
+    </h2>
+    <div class="social-links-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-h-[400px] overflow-y-auto pr-2">
+     <!-- 20+ cyber security related professional links with icon color gradient backgrounds -->
+     <a aria-label="Hack The Box" class="social-link flex items-center space-x-4 bg-htb rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#00ff6a]/70" href="https://www.hackthebox.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Hack The Box logo" class="w-8 h-8 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Hack_The_Box_Logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Hack The Box
+      </span>
+     </a>
+     <a aria-label="TryHackMe" class="social-link flex items-center space-x-4 bg-thm rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#3b82f6]/70" href="https://tryhackme.com" rel="noopener noreferrer" target="_blank">
+      <img alt="TryHackMe logo" class="w-8 h-8 object-contain" src="https://tryhackme.com/static/media/logo.7a3a3a3a.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       TryHackMe
+      </span>
+     </a>
+     <a aria-label="CTFTime" class="social-link flex items-center space-x-4 bg-ctf rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#ec4899]/70" href="https://ctftime.org" rel="noopener noreferrer" target="_blank">
+      <img alt="CTFTime logo" class="w-8 h-8 object-contain" src="https://ctftime.org/static/img/logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       CTFTime
+      </span>
+     </a>
+     <a aria-label="Cybrary" class="social-link flex items-center space-x-4 bg-cybrary rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#3b82f6]/70" href="https://www.cybrary.it" rel="noopener noreferrer" target="_blank">
+      <img alt="Cybrary logo" class="w-8 h-8 object-contain" src="https://www.cybrary.it/wp-content/themes/cybrary/assets/images/cybrary-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Cybrary
+      </span>
+     </a>
+     <a aria-label="Offensive Security" class="social-link flex items-center space-x-4 bg-offsec rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#fb923c]/70" href="https://www.offensive-security.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Offensive Security logo" class="w-8 h-8 object-contain" src="https://www.offensive-security.com/wp-content/themes/offsec/assets/images/logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Offensive Security
+      </span>
+     </a>
+     <a aria-label="SANS Institute" class="social-link flex items-center space-x-4 bg-sans rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#f87171]/70" href="https://www.sans.org" rel="noopener noreferrer" target="_blank">
+      <img alt="SANS Institute logo" class="w-8 h-8 object-contain" src="https://www.sans.org/assets/img/sans-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       SANS Institute
+      </span>
+     </a>
+     <a aria-label="Exploit Database" class="social-link flex items-center space-x-4 bg-exploitdb rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#3b82f6]/70" href="https://www.exploit-db.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Exploit Database logo" class="w-8 h-8 object-contain" src="https://www.exploit-db.com/assets/img/exploitdb-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Exploit DB
+      </span>
+     </a>
+     <a aria-label="Metasploit" class="social-link flex items-center space-x-4 bg-metasploit rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#a855f7]/70" href="https://www.metasploit.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Metasploit logo" class="w-8 h-8 object-contain" src="https://metasploit.help.rapid7.com/assets/images/metasploit-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Metasploit
+      </span>
+     </a>
+     <a aria-label="Center for Internet Security" class="social-link flex items-center space-x-4 bg-cis rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#10b981]/70" href="https://www.cisecurity.org" rel="noopener noreferrer" target="_blank">
+      <img alt="Center for Internet Security logo" class="w-8 h-8 object-contain" src="https://www.cisecurity.org/wp-content/themes/cisecurity/assets/images/cis-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       CIS
+      </span>
+     </a>
+     <a aria-label="NIST" class="social-link flex items-center space-x-4 bg-nist rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#3b82f6]/70" href="https://www.nist.gov" rel="noopener noreferrer" target="_blank">
+      <img alt="NIST logo" class="w-8 h-8 object-contain" src="https://www.nist.gov/sites/default/files/styles/scale_720/public/images/2019/06/06/nist_logo.png"/>
+      <span class="text-white font-semibold text-lg select-text">
+       NIST
+      </span>
+     </a>
+     <a aria-label="Kali Linux" class="social-link flex items-center space-x-4 bg-kali rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#1e293b]/70" href="https://www.kali.org" rel="noopener noreferrer" target="_blank">
+      <img alt="Kali Linux logo" class="w-8 h-8 object-contain" src="https://www.kali.org/images/kali-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Kali Linux
+      </span>
+     </a>
+     <a aria-label="Black Hat" class="social-link flex items-center space-x-4 bg-blackhat rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#434343]/70" href="https://www.blackhat.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Black Hat logo" class="w-8 h-8 object-contain" src="https://www.blackhat.com/images/blackhat-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Black Hat
+      </span>
+     </a>
+     <a aria-label="DEF CON" class="social-link flex items-center space-x-4 bg-defcon rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#fbbf24]/70" href="https://www.defcon.org" rel="noopener noreferrer" target="_blank">
+      <img alt="DEF CON logo" class="w-8 h-8 object-contain" src="https://defcon.org/images/defcon-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       DEF CON
+      </span>
+     </a>
+     <a aria-label="Cybersecurity Ventures" class="social-link flex items-center space-x-4 bg-cyberventures rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#ec4899]/70" href="https://www.cybersecurityventures.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Cybersecurity Ventures logo" class="w-8 h-8 object-contain" src="https://cybersecurityventures.com/wp-content/uploads/2020/06/cybersecurity-ventures-logo.png"/>
+      <span class="text-white font-semibold text-sm select-text">
+       Cybersecurity Ventures
+      </span>
+     </a>
+     <a aria-label="Security Weekly" class="social-link flex items-center space-x-4 bg-securityweekly rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#d946ef]/70" href="https://www.securityweekly.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Security Weekly logo" class="w-8 h-8 object-contain" src="https://securityweekly.com/wp-content/uploads/2020/06/SecurityWeeklyLogo.png"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Security Weekly
+      </span>
+     </a>
+     <a aria-label="Infosec Institute" class="social-link flex items-center space-x-4 bg-infosec rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#3b82f6]/70" href="https://www.infosecinstitute.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Infosec Institute logo" class="w-8 h-8 object-contain" src="https://www.infosecinstitute.com/wp-content/themes/infosec/assets/images/infosec-logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Infosec Institute
+      </span>
+     </a>
+     <a aria-label="Dark Reading" class="social-link flex items-center space-x-4 bg-darkreading rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#f87171]/70" href="https://www.darkreading.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Dark Reading logo" class="w-8 h-8 object-contain" src="https://www.darkreading.com/themes/custom/dr/logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Dark Reading
+      </span>
+     </a>
+     <a aria-label="Security Magazine" class="social-link flex items-center space-x-4 bg-securitymagazine rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#34d399]/70" href="https://www.securitymagazine.com" rel="noopener noreferrer" target="_blank">
+      <img alt="Security Magazine logo" class="w-8 h-8 object-contain" src="https://www.securitymagazine.com/themes/custom/securitymagazine/logo.svg"/>
+      <span class="text-white font-semibold text-lg select-text">
+       Security Magazine
+      </span>
+     </a>
+    </div>
+   </section>
+   <!-- Social Links Section -->
+   <section aria-label="Social links section" class="section-container mb-32 fade-in opacity-0 translate-y-8" data-animate="" id="social-links">
+    <h2 class="text-3xl font-extrabold mb-12 select-text">
+     Social Links
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-h-[400px] overflow-y-auto pr-2">
+     <a aria-label="LinkedIn" class="social-link flex items-center space-x-4 bg-gradient-to-r from-blue-700 to-blue-500 rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500/70" href="http://www.linkedin.com/in/alok-kumar-singh-3ab304261" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-linkedin-in text-white text-2xl"></i>
+      <span class="text-white font-semibold text-lg select-text">
+       LinkedIn
+      </span>
+     </a>
+     <a aria-label="Instagram" class="social-link flex items-center space-x-4 bg-gradient-to-r from-pink-600 to-pink-400 rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-500/70" href="#" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-instagram text-white text-2xl"></i>
+      <span class="text-white font-semibold text-lg select-text">
+       Instagram
+      </span>
+     </a>
+     <a aria-label="Twitter" class="social-link flex items-center space-x-4 bg-gradient-to-r from-sky-600 to-sky-400 rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-sky-500/70" href="#" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-twitter text-white text-2xl"></i>
+      <span class="text-white font-semibold text-lg select-text">
+       Twitter
+      </span>
+     </a>
+     <a aria-label="Facebook" class="social-link flex items-center space-x-4 bg-gradient-to-r from-blue-800 to-blue-600 rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-600/70" href="#" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-facebook-f text-white text-2xl"></i>
+      <span class="text-white font-semibold text-lg select-text">
+       Facebook
+      </span>
+     </a>
+     <a aria-label="GitHub" class="social-link flex items-center space-x-4 bg-gradient-to-r from-gray-800 to-gray-600 rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-gray-600/70" href="https://github.com" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-github text-white text-2xl"></i>
+      <span class="text-white font-semibold text-lg select-text">
+       GitHub
+      </span>
+     </a>
+     <a aria-label="Stack Overflow" class="social-link flex items-center space-x-4 bg-gradient-to-r from-orange-600 to-orange-400 rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-orange-500/70" href="https://stackoverflow.com" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-stack-overflow text-white text-2xl"></i>
+      <span class="text-white font-semibold text-lg select-text">
+       Stack Overflow
+      </span>
+     </a>
+     <a aria-label="Reddit" class="social-link flex items-center space-x-4 bg-gradient-to-r from-orange-700 to-orange-500 rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-orange-600/70" href="https://reddit.com" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-reddit-alien text-white text-2xl"></i>
+      <span class="text-white font-semibold text-lg select-text">
+       Reddit
+      </span>
+     </a>
+     <a aria-label="YouTube" class="social-link flex items-center space-x-4 bg-gradient-to-r from-red-700 to-red-500 rounded-md px-6 py-3 shadow-lg focus:outline-none focus:ring-4 focus:ring-red-600/70" href="https://youtube.com" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-youtube text-white text-2xl"></i>
+      <span class="text-white font-semibold text-lg select-text">
+       YouTube
+      </span>
+     </a>
+    </div>
+   </section>
+  </main>
+  <!-- Modal for certificates -->
+  <div aria-describedby="modal-desc" aria-labelledby="modal-title" aria-modal="true" class="modal-overlay" id="modal" role="dialog" tabindex="-1">
+   <div class="modal-content">
+    <button aria-label="Close modal" class="modal-close">
+     ×
+    </button>
+    <img alt="Certificate image" id="modal-img" src=""/>
+   </div>
+  </div>
+  <script>
+   // Typed text effect for the roles with line breaks for consistent height
+   const roles = [
+     "Cyber Security Enthusiast\n",
+     "Google Cloud Explorer\n",
+     "Frontend Developer\n",
+     "Network Security Learner\n",
+     "Creative Problem Solver\n",
+     "UI/UX Designer\n"
+   ];
+   const typedTextSpan = document.getElementById("typed-text");
+   const typingDelay = 150;
+   const erasingDelay = 100;
+   const newTextDelay = 1500; // Delay between current and next text
+   let roleIndex = 0;
+   let charIndex = 0;
+
+   function type() {
+     if (charIndex < roles[roleIndex].length) {
+       typedTextSpan.textContent += roles[roleIndex].charAt(charIndex);
+       charIndex++;
+       setTimeout(type, typingDelay);
+     } else {
+       setTimeout(erase, newTextDelay);
+     }
+   }
+
+   function erase() {
+     if (charIndex > 0) {
+       typedTextSpan.textContent = roles[roleIndex].substring(0, charIndex - 1);
+       charIndex--;
+       setTimeout(erase, erasingDelay);
+     } else {
+       roleIndex++;
+       if (roleIndex >= roles.length) roleIndex = 0;
+       setTimeout(type, typingDelay + 500);
+     }
+   }
+
+   document.addEventListener("DOMContentLoaded", function () {
+     if (roles.length) setTimeout(type, newTextDelay + 250);
+   });
+
+   // Intersection Observer for fade-in animations
+   const observerOptions = {
+     threshold: 0.1
+   };
+   const observer = new IntersectionObserver((entries) => {
+     entries.forEach(entry => {
+       if (entry.isIntersecting) {
+         entry.target.classList.add("visible");
+         observer.unobserve(entry.target);
+       }
+     });
+   }, observerOptions);
+
+   document.querySelectorAll("[data-animate]").forEach(el => {
+     observer.observe(el);
+   });
+
+   // Highlight active nav link on scroll
+   const sections = document.querySelectorAll("section[id]");
+   const navLinks = document.querySelectorAll("nav ul li a.nav-link");
+
+   function activateNavLink() {
+     let scrollY = window.pageYOffset;
+     sections.forEach(section => {
+       const sectionHeight = section.offsetHeight;
+       const sectionTop = section.offsetTop - 90;
+       const sectionId = section.getAttribute("id");
+       if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+         navLinks.forEach(link => {
+           link.classList.remove("active");
+           if (link.getAttribute("href") === "#" + sectionId) {
+             link.classList.add("active");
+           }
+         });
+       }
+     });
+   }
+   window.addEventListener("scroll", activateNavLink);
+
+   // Smooth scroll with offset for fixed header (for browsers that don't support scroll-behavior)
+   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+     anchor.addEventListener("click", function (e) {
+       e.preventDefault();
+       const targetID = this.getAttribute("href").substring(1);
+       const targetSection = document.getElementById(targetID);
+       if (!targetSection) return;
+       const headerOffset = 80;
+       const elementPosition = targetSection.getBoundingClientRect().top;
+       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+       window.scrollTo({
+         top: offsetPosition,
+         behavior: "smooth"
+       });
+
+       // Close mobile nav if open
+       const navToggle = document.getElementById("nav-toggle");
+       if (navToggle.checked) {
+         navToggle.checked = false;
+       }
+     });
+   });
+
+   // Project cards click open in new tab
+   document.querySelectorAll(".project-card").forEach(card => {
+     card.addEventListener("click", () => {
+       const url = card.getAttribute("data-url");
+       if (url) window.open(url, "_blank", "noopener");
+     });
+     card.addEventListener("keydown", e => {
+       if (e.key === "Enter" || e.key === " ") {
+         e.preventDefault();
+         const url = card.getAttribute("data-url");
+         if (url) window.open(url, "_blank", "noopener");
+       }
+     });
+   });
+
+   // Modal for certificates
+   const modal = document.getElementById("modal");
+   const modalImg = document.getElementById("modal-img");
+   const closeBtn = modal.querySelector(".modal-close");
+
+   document.querySelectorAll(".open-cert").forEach(btn => {
+     btn.addEventListener("click", () => {
+       const imgSrc = btn.getAttribute("data-img");
+       modalImg.src = imgSrc;
+       modal.classList.add("active");
+       modal.focus();
+     });
+   });
+
+   closeBtn.addEventListener("click", () => {
+     modal.classList.remove("active");
+     modalImg.src = "";
+   });
+
+   modal.addEventListener("click", e => {
+     if (e.target === modal) {
+       modal.classList.remove("active");
+       modalImg.src = "";
+     }
+   });
+
+   // Close modal on Escape key
+   document.addEventListener("keydown", e => {
+     if (e.key === "Escape" && modal.classList.contains("active")) {
+       modal.classList.remove("active");
+       modalImg.src = "";
+     }
+   });
+  </script>
+ </body>
+</html>
